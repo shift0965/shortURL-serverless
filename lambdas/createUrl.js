@@ -16,14 +16,14 @@ function generateRandomString(length) {
 
 exports.handler = async (event) => {
   try {
-    const originalURL = event.body;
+    const originalURL = JSON.parse(event.body).body;
     const dbClient = new DynamoDB.DocumentClient();
 
     const shortURL = generateRandomString(7);
 
     const params = {
-      TableName: process.env.TABLE_NAME,
-      Item: { originalURL, shortURL },
+      TableName: process.env.TABLE_NAME ?? "",
+      Item: { shortURL, originalURL },
     };
 
     await dbClient.put(params).promise();
@@ -33,7 +33,6 @@ exports.handler = async (event) => {
       body: shortURL,
     };
   } catch (error) {
-    // Handle any errors that occurred during the process
     console.error(error);
     return {
       statusCode: 500,
