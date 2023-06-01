@@ -2,7 +2,8 @@ const crypto = require("crypto");
 const { DynamoDB } = require("aws-sdk");
 
 function generateRandomString(length) {
-  const characters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const characters =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const charactersLength = characters.length;
   let randomString = "";
 
@@ -13,6 +14,12 @@ function generateRandomString(length) {
 
   return randomString;
 }
+
+const corsSetting = {
+  "Access-Control-Allow-Headers": "*",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+};
 
 exports.handler = async (event) => {
   try {
@@ -30,13 +37,15 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
-      body: shortURL,
+      body: JSON.stringify({ shortURL: shortURL }),
+      headers: corsSetting,
     };
   } catch (error) {
     console.error(error);
     return {
       statusCode: 500,
-      body: error,
+      body: JSON.stringify({ error: error }),
+      headers: corsSetting,
     };
   }
 };
