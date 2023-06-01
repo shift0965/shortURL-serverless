@@ -22,9 +22,9 @@ exports.handler = async function (event) {
 
     if (data.Item) {
       return {
-        statusCode: 200,
-        body: JSON.stringify({ originalURL: data.Item.originalURL }),
-        headers: corsSetting,
+        statusCode: 301,
+        headers: { ...corsSetting, Location: data.Item.originalURL },
+        // body: JSON.stringify({ originalURL: data.Item.originalURL }),
       };
     } else {
       return {
