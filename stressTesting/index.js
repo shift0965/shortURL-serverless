@@ -17,7 +17,7 @@ export const options = {
 };
 // test HTTP
 export default function () {
-  const res = http.get("https://byat75hke5.execute-api.ap-southeast-1.amazonaws.com/prod/dkLs8Ua");
+  const res = http.get("https://byat75hke5.execute-api.ap-southeast-1.amazonaws.com/prod/abcde");
   check(res, { "status was 200": (r) => r.status == 200 });
   sleep(1);
 }
